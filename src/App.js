@@ -1,25 +1,29 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import News from './components/News';
+import Search from './components/Search';
+import CategoryFilter from './components/CategoryFilter';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [category, setCategory] = useState('');
+  const [query, setQuery] = useState('');
+
+  const handleSearch = (searchQuery) => {
+    setQuery(searchQuery);  // Update the search query
+  };
+
+  const handleSelectCategory = (selectedCategory) => {
+    setCategory(selectedCategory);
+    setQuery(''); // Reset the search query when selecting a new category
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Search onSearch={handleSearch} />
+      <CategoryFilter onSelectCategory={handleSelectCategory} />
+      <News category={category} query={query} />
     </div>
   );
-}
+};
 
 export default App;
